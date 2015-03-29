@@ -1,3 +1,3 @@
 # mycode
-#gggggggg
-erererererer
+#
+beginner c/linux
