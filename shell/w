@@ -1,0 +1,9 @@
+#!/bin/bash
+function check_user()
+{
+    line=`cat /etc/passwd | grep -n "$1" | cut -d ":" -f 1`
+    if [ -z $line ]
+        return $line
+    return 0
+}
+
