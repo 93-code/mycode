@@ -1,6 +1,9 @@
 #include <stdio.h>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 990482393fc74c11b5acbe6d55f876c1572576ab
 int main()
 {
     int sum = 0,i = 0;
