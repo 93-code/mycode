@@ -87,14 +87,10 @@ int del_assign_seqlist(SeqList *L,int n)
             }
 #endif
             L->data[j++] = L->data[i];
-        }    
-        else
-        {
             L->n = L->n - 1;
-        }
-    
+        }    
     } 
-    L->n--;
+
     return 0;
 }
 
@@ -104,7 +100,7 @@ int main()
 {
     SeqList *L; 
     int i = 0;
-    DATATYPE data[] = {1,5,3,4,3,2,1,1};
+    DATATYPE data[] = {1,5,3,4,3,2,1,1,1};
     int num = 0;
 
     L = create_seqlist();
