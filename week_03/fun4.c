@@ -1,4 +1,5 @@
 /* 15:17 2015-03-31 Tuesday */
+/*µİ¹é£¬·´ÏòÊä³ö*/
 #include <stdio.h>
 int fun4(char * p);
 int main()
