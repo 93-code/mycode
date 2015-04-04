@@ -12,10 +12,10 @@ typedef struct
 }SeqList;
 
 SeqList * Create_SeqList();
-int Insert_SeqList(SeqList *L,int data);
+int Insert_SeqList(SeqList *L,DATATYPE data);
 int Printf_SeqList(SeqList *L);
-int Delete_SeqList(SeqList *L,int data);
-int Modifi_SeqList(SeqList *L,int n,int data);
+int Delete_Assign_SeqList(SeqList *L,DATATYPE data);
+int Modifi_SeqList(SeqList *L,int n,DATATYPE data);
 int IsEmpty_SeqList(SeqList *L);
 int IsFull_SeqList(SeqList *L);
 int Sort_SeqList(SeqList *L);
@@ -28,7 +28,7 @@ int main()
 
     int i;
     DATATYPE s[]={1,45,3,2,5,1,9};
-    DATATYPE s1[]={1,2,3,1,1,14,2,15,2,3,4};
+    DATATYPE s1[]={1,2,3,1,1,14,2,15,2,3,4,14,3,3,4};
 
     L = Create_SeqList();
     L1 = Create_SeqList();
@@ -42,15 +42,19 @@ int main()
     printf("Printf_SeqList L.......\n");
     Printf_SeqList(L);
 
-    printf("Delete_SeqList.......\n");
+#if 0/*{{{*/
+    printf("Delete_Assign_SeqList.......\n");
     Delete_SeqList(L,1);
     printf("Printf_SeqList.......\n");
     Printf_SeqList(L);
+#endif/*}}}*/
 
+#if 0/*{{{*/
     printf("Modifi_SeqList.......\n");
     Modifi_SeqList(L,3,99);
     printf("Printf_SeqList.......\n");
     Printf_SeqList(L);
+#endif /*}}}*/
 
     printf("Sort_SeqList.......\n");
     Sort_SeqList(L);
@@ -64,8 +68,17 @@ int main()
     {
         Insert_SeqList(L1,s1[i]);
     }
+    printf("Printf_SeqList.......\n");
+    Printf_SeqList(L1);
+
+#if 0/*{{{*/
+    printf("=================\n");
+    printf("Insert_Position_SeqList.....\n");
+    Insert_Position_SeqList(L1,1,99);
+    printf("Printf_SeqList.......\n");
+    Printf_SeqList(L1);
     printf("================\n");
-    printf("Delete_SeqList.......\n");
+    printf("Delete_Assign_SeqList.......\n");
     Delete_SeqList(L1,1);
     printf("Printf_SeqList.......\n");
     Printf_SeqList(L1);
@@ -73,10 +86,13 @@ int main()
 
     printf("Printf_SeqList L1.......\n");
     Printf_SeqList(L1);
+#endif/*}}}*/
+
     printf("Delete_Repeat_SeqList.....\n");
     Delete_Repeat_SeqList(L1);
     printf("Printf_SeqList.......\n");
     Printf_SeqList(L1);
+
 
 
     return 0;
@@ -109,7 +125,7 @@ int IsFull_SeqList(SeqList *L)
     return 1;
 }
 
-int Insert_SeqList(SeqList *L,int data)
+int Insert_SeqList(SeqList *L,DATATYPE data)
 {
     if (IsFull_SeqList(L))    
     {
@@ -121,7 +137,7 @@ int Insert_SeqList(SeqList *L,int data)
     return 0;
 }
 
-int Insert_Assign_SeqList(SeqList *L,int n,int data)
+int Insert_Position_SeqList(SeqList *L,int n,DATATYPE data)
 {
     if (IsFull_SeqList(L))
     {
@@ -129,7 +145,7 @@ int Insert_Assign_SeqList(SeqList *L,int n,int data)
     }
     int i = 0;
 
-    for (i = L->n -1; i > n-1; i--)
+    for (i = L->n -1; i >= n-1; i--)
     {
         L->data[i+1] = L->data[i];
     }
@@ -153,7 +169,7 @@ int Printf_SeqList(SeqList *L)
     return 0;
 }
 
-int Delete_SeqList(SeqList *L,int data)
+int Delete_Assign_SeqList(SeqList *L,DATATYPE data)
 {
     if (IsEmpty_SeqList(L))
     {
@@ -166,18 +182,22 @@ int Delete_SeqList(SeqList *L,int data)
     {
         if (L->data[i] != data)
         {
-            L->data[j++] = L->data[j];
+            L->data[j++] = L->data[i];
         } 
-        else
-        {
-            L->n--;
-        }
     }
+    
+    if (i == j)
+    {
+        printf("The delete data:%d is not exist!\n",data);
+        return -1;
+    }
+    L->n = j;
+
     return 0;
 }
 
 
-int Modifi_SeqList(SeqList *L,int n,int data)
+int Modifi_SeqList(SeqList *L,int n,int data)/*{{{*/
 {
     if (!(n >= 0 && n <= L->n))
     {
@@ -186,7 +206,7 @@ int Modifi_SeqList(SeqList *L,int n,int data)
     }
     L->data[n-1] = data;
     return 0;
-}
+}/*}}}*/
 
 int Sort_SeqList(SeqList *L)
 {
@@ -218,19 +238,42 @@ int Delete_Repeat_SeqList(SeqList *L)
 
     DATATYPE tmp = 0;
     int i;
-    int j;
-    for (i = 0,j = 0; i < L->n-j; i++,j++)
+    for (i = 0; i < L->n; i++)
     {
         tmp = L->data[i];
-        Delete_SeqList(L,tmp);
-        Insert_Assign_SeqList(L,i,tmp);
-#if 0 
+        Delete_Assign_SeqList(L,tmp);
+        Insert_Position_SeqList(L,i+1,tmp);
+#if 0 /*{{{*/
+        printf("tmp = %d\n",tmp);
         printf("Printf_SeqList %d.......\n",i);
         Printf_SeqList(L);
-        Insert_SeqList(L,tmp);
+        
+        printf("tmp = %d\n",tmp);
+        Insert_Position_SeqList(L,i+1,tmp);
+        printf("tmp = %d\n",tmp);
         printf("Printf_SeqList %d.......\n",i);
         Printf_SeqList(L);
-#endif
+        printf("tmp = %d\n",tmp);
+#endif/*}}}*/
+    }
+    return 0;
+}
+int TDelete_Repeat_SeqList(SeqList *L)
+{
+    int k;
+    int i,j;
+
+    for (i = 0; i < L->n; i++)
+    {
+        for (j = i +1,k = i +1; j < L->n; j++)
+        {
+           if (L->data[j] != L->data[i]) 
+           {
+               L->data[k] = L->data[j];
+               k++;
+           }
+        }
+        L->n = k;
     }
     return 0;
 }
