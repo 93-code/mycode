@@ -1,37 +1,17 @@
-/* 09:50 2015-03-31 Tuesday */
+/* 09:21 2015-04-01 Wednesday */
 #include <stdio.h>
 
-int mswitch(int *a,int *b);
+union stu
+{
+    int a;
+    short b;
+    char c;
+}s;
 int main()
 {
-    int a = 10,b = 20;
-    mswitch(&a,&b);
-    printf("a = %d,b = %d\n",a,b);
-    printf("------------------\n");
-    mswitch(&a,&b);
-    printf("a = %d,b = %d\n",a,b);
+    s.a = 0x12345678;
+    printf("a :%#x\n",s.a);
+    printf("b :%#x\n",s.b);
+    printf("c :%#x\n",s.c);
     return 0;
-}
-
-int mswitch(int *a,int *b)
-{
-    int tmp = 0;
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-    return 0;
-}
-int mswitch1(int *a,int *b)
-{
-    *a ^= *b;
-    *b ^= *a;
-    *a ^= *b;
-    return 0;
-}
-int mswitch2(int *a,int *b)
-{
-    *a = *a - *b;
-    *b = *a + *b;
-    *a = *b - *a;
-    return 0;
-}
+} 
