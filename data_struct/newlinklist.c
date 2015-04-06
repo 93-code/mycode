@@ -113,10 +113,10 @@ int Sort_LinkList(LinkNode *head)
 {
     if (!Check_LinkNode_legal(head))
         return -1;
-    LinkNode *q,*p;
+    LinkNode *q,*p; //指向需要排序的部分，
     LinkNode *k;
 
-    LinkNode *t = head->next;
+    LinkNode *t = head->next;//t从未排序的部分出数
     head->next = NULL;
 
     while (t)

@@ -1,0 +1,63 @@
+/* 14:25 2015-04-06 星期一 */
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int DATATYPE;
+typedef struct node
+{
+    DATATYPE data;
+    struct node *next;
+}LinkList;
+
+LinkList * Create_LinkList()
+{
+    LinkList *head;
+
+    head = (LinkList*)malloc(sizeof(LinkList));
+    if (head == NULL)
+    {
+        printf("No free memory!\n");
+        return -1;
+    }
+
+    return head;
+}
+
+int Insert_Tail_LinkList(LinkList *head,DATATYPE data)
+{
+    LinkList *new;
+    LinkList *p;
+
+    p = head->next;
+    while (p)
+    {
+        p = p->next;
+    }
+
+    new = (LinkList *)malloc(sizeof(LinkList));
+    
+    new->data = data;
+    p->next = new;
+    new->next = NULL:
+
+    return 0;
+}
+
+int Print_LinkList(LinkList *head)
+{
+    LinkList *p;
+
+    p = head->next;
+
+    while (p)
+    {
+        printf("%d  ",p->data);
+    }
+
+    return 0;
+}
+
+int main()
+{
+    DATATYPE s[] = {1,2,3,21,12,32,5,9,33};
+}
