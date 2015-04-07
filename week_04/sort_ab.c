@@ -64,10 +64,10 @@ int Print_LinkList(LinkList *head)
     return 0;
 }
 
-int Sort_ab(LinkList *a,LinkList *b)
+LinkList * Sort_ab(LinkList *a,LinkList *b)
 {
     LinkList *pa;
-    LinkList *qa,*k;
+    LinkList *q,*p,*k;
     LinkList *t = a;
 
     while (t->next)
@@ -79,34 +79,34 @@ int Sort_ab(LinkList *a,LinkList *b)
     free(b);
 
     //sort
-    t = a->next;
+    pa = a->next;
     a->next = NULL;
     
-    while (t)
+    q = a;
+    p = a->next;
+    while (pa)
     {
-        qa = a;
-        pa = a->next;
-       while (pa) 
+       while (p) 
        {
-           if (pa->data > t->data)
+           if (q->data > pa->data)
            {
                break;
            }
            else
            {
-               qa = qa->next;
-               pa = pa->next;
+               q = q->next;
+               p = p->next;
            }
        }
        //Insert
-     k = t->next;
-     t->next = qa->next;
-     qa->next = t;
-     t = k;
+     k = pa->next;
+     pa->next = q->next;
+     q->next = pa;
+     pa = k;
 
     }
 
-   return 0; 
+   return a; 
 }
 
 int main()
@@ -127,8 +127,7 @@ int main()
     printf("\n");
     Print_LinkList(p);
     printf("\n");
-    Sort_ab(q,p);
-    Print_LinkList(q);
+    Print_LinkList(Sort_ab(q,p));
     printf("\n");
     return 0;
 }
